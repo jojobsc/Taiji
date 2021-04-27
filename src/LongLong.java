@@ -4,38 +4,34 @@ public class LongLong {
     private int n;
     // 128 bits
 
+    /*
+        first 49, 81 or 121 used, the other should be 0
+        from left to right is HI than LO
+
+     */
     public LongLong(long a, long b){
         HI=a;
         LO=b;
     }
     // |
-    public LongLong OR(LongLong a, LongLong b){
+    public LongLong OR(LongLong a){
         LongLong result = new LongLong(0,0);
-        if (n == 9 || n == 11){
-            result.HI = a.HI | b.HI;
-            result.LO = a.LO | b.LO;
-        }
-        else result.HI = a.HI | b.HI;
+        result.HI = a.HI | this.HI;
+        result.LO = a.LO | this.LO;
         return result;
     }
     // &
-    public LongLong AND(LongLong a, LongLong b){
+    public LongLong AND(LongLong a){
         LongLong result = new LongLong(0,0);
-        if (n == 9 || n == 11){
-            result.HI = a.HI & b.HI;
-            result.LO = a.LO & b.LO;
-        }
-        else result.HI = a.HI & b.HI;
+        result.HI = a.HI & this.HI;
+        result.LO = a.LO & this.LO;
         return result;
     }
     // ~
     public LongLong NEG(LongLong a){
         LongLong result = new LongLong(0,0);
-        if (n == 9 || n == 11){
-            result.HI = ~a.HI;
-            result.LO = ~a.LO;
-        }
-        else result.HI = ~a.HI;
+        result.HI = ~a.HI;
+        result.LO = ~a.LO;
         return result;
     }
     // >> for 11x11
@@ -56,7 +52,7 @@ public class LongLong {
         LongLong result = new LongLong(0,0);
         long temp;
         temp = this.LO;
-        temp = temp >> (64 - l);
+        temp = temp >>> (64 - l);
         // mask to turn the last sever bits to 0
         long m = 0b1111111111111111111111111111111111111111111111111111111110000000L;
         result.HI =  this.HI << l | temp;
